@@ -1,10 +1,12 @@
 # Cookie Cats A/B test: should the first gate move from level 30 to 40?
 
-A live-ops experiment readout on 90,189 players of a mobile match-3 game. **The recommendation is to keep the first gate at level 30.** Moving it to level 40 lowered D7 retention from 19.02% to 18.20%, a gap of 0.82 percentage points (95% CI 0.31 to 1.33, p = 0.0016) or 4.3% lower in relative terms. In resampling, gate_30 led in 99.9% of runs. D1 retention was not significantly different (44.82% vs 44.23%, p = 0.074), though the test was underpowered for a gap that small. One caveat is prominent in the readout: the 50/50 split failed its sample ratio check (p = 0.0086). The cause can't be diagnosed from this file, but it would overturn the D7 result only if at least 784 of the 789 surplus players weren't retained on day 7.
+A live-ops experiment readout on 90,189 players of a mobile match-3 game. **The recommendation is to keep the first gate at level 30.** Moving it to level 40 lowered D7 retention from 19.02% to 18.20%, a gap of 0.82 percentage points (95% CI 0.31 to 1.33, p = 0.0016) or 4.3% lower in relative terms. In resampling, gate_30 led in 99.9% of runs. D1 retention was not significantly different (44.82% vs 44.23%, p = 0.074), though the test was underpowered for a gap that small. One caveat is prominent in the readout: the 50/50 split failed its sample ratio check (p = 0.0086). All of the surplus sits among players with under 30 rounds, who can't have reached a gate, so the gate didn't cause it. Removing those players at their group's retention rate shrinks the D7 gap to 0.57 percentage points (95% CI 0.06 to 1.08), so 0.82 is probably an overstatement.
 
 ![Retention by variant](out/01_retention_by_variant.png)
 
 **Read next:** [decision memo](case_study.md) (one page, for a studio head) · [full notebook](cookie_cats_ab_test.ipynb)
+
+The notebook also has a round-by-round drop-off view. The data has no level column, so true level-by-level drop-off isn't possible.
 
 The analysis is independent, uses a public dataset, and isn't affiliated with Tactile Entertainment. The data has no revenue column, so the monetisation side of the gate isn't measured.
 
@@ -44,7 +46,7 @@ The last command runs the BigQuery SQL in SQLite and should print `SQL vs Python
 ├── tools/
 │   ├── build_notebook.py       runs the analysis, writes notebook and outputs
 │   └── test_sql.py             checks the SQL against the Python
-├── out/                        results.json, segment CSVs, charts
+├── out/                        results.json, segment and drop-off CSVs, charts
 └── data/                       download instructions (CSV not committed)
 ```
 

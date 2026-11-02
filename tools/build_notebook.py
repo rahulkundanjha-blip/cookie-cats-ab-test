@@ -149,13 +149,18 @@ plt.show()
 # How far could the 50/50 imbalance move the primary result?
 r7 = results["retention_7"]
 sens = cc.srm_sensitivity(r7["x_control"], r7["n_control"], r7["x_treatment"], r7["n_treatment"])
+pre_gate = cc.before_any_gate(df)
 scenarios = {"as observed": r7,
+             "surplus dropped at low-engagement rate": pre_gate["surplus_low_engagement"],
              "extras typical, dropped": sens["typical_extras_dropped"],
              "worst case: extras dropped": sens["worst_extras_dropped"],
              "worst case: missing added": sens["worst_missing_added"]}
 print(f"imbalance: {sens['excess_players']} players; gap loses significance only if at least "
       f"{sens['breakeven_non_retained']} of them ({sens['breakeven_share']:.1%}) were non-retained "
       f"(typical gate_40 non-retained share: {sens['typical_non_retained_share']:.1%})")
+for name, part in [("under 30 rounds", pre_gate["below"]), ("30+ rounds", pre_gate["at_or_above"])]:
+    print(f"{name}: {part['srm']['n_control']:,} vs {part['srm']['n_treatment']:,}, split p = {part['srm']['p_value']:.4f}; "
+          f"D7 {part['d7']['rate_control']:.2%} vs {part['d7']['rate_treatment']:.2%}, p = {part['d7']['p_value']:.4f}")
 pd.DataFrame({k: {"gate_30": f"{r['rate_control']:.2%}", "gate_40": f"{r['rate_treatment']:.2%}",
                   "gap (pp)": f"{100*r['diff']:+.2f}",
                   "95% CI (pp)": f"[{100*r['ci_low']:+.2f}, {100*r['ci_high']:+.2f}]",
@@ -282,6 +287,64 @@ ax.legend(loc="lower right")
 fig.tight_layout()
 plt.show()
 '''),
+    ("md", "s7b_dropoff"),
+    ("code", '''\
+round_tbl = cc.round_table(df)
+bands = cc.band_table(df)
+reach = cc.survival_tests(df)
+d7_reached = cc.d7_given_reached(df)
+bands.assign(**{"gate_30 per round": bands.per_round_control.map("{:.2%}".format),
+                "gate_40 per round": bands.per_round_treatment.map("{:.2%}".format),
+                "p (corrected)": bands.p_bonferroni.map("{:.4f}".format)}
+             ).set_index("band")[["gate_30 per round", "gate_40 per round", "p (corrected)"]]
+'''),
+    ("code", '''\
+# fig: 05_dropoff_by_round
+fig, axes = plt.subplots(2, 1, figsize=(10, 7), sharex=True, gridspec_kw={"height_ratios": [1.2, 1]})
+
+# Top: average per-round drop-off in 5-round bins.
+ax = axes[0]
+for v, k in [(cc.CONTROL, "control"), (cc.TREATMENT, "treatment")]:
+    xs, ys = [], []
+    for lo in range(1, 121, 5):
+        entered = round_tbl.loc[round_tbl["round"] == lo, f"reached_{k}"].iloc[0]
+        stopped = round_tbl.loc[round_tbl["round"].between(lo, lo + 4), f"stopped_{k}"].sum()
+        xs.append(lo + 2)
+        ys.append(100 * (1 - (1 - stopped / entered) ** (1 / 5)))
+    ax.plot(xs, ys, color=COLORS[v], label=v, zorder=3)
+ax.set_ylim(0, None)
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"{y:.0f}%"))
+ax.set_ylabel("players stopping, per round")
+ax.set_title("Drop-off per round, in 5-round bins")
+ax.legend(loc="upper right", ncols=2)
+
+# Bottom: gap in the share of players reaching each round.
+ax = axes[1]
+ns = np.arange(1, 121)
+n_c, n_t = checks["versions"][cc.CONTROL], checks["versions"][cc.TREATMENT]
+a = round_tbl.set_index("round").loc[ns, "survival_control"].to_numpy()
+b = round_tbl.set_index("round").loc[ns, "survival_treatment"].to_numpy()
+gap = 100 * (a - b)
+half = 100 * 1.96 * np.sqrt(a * (1 - a) / n_c + b * (1 - b) / n_t)
+ax.fill_between(ns, gap - half, gap + half, color=NEUTRAL, alpha=0.18, linewidth=0, zorder=1)
+ax.plot(ns, gap, color=NEUTRAL, zorder=3)
+ax.axhline(0, color=INK2, lw=1, zorder=2)
+ax.text(119, 1.45, "above zero: more gate_30 players got this far", ha="right", color=INK2, fontsize=9.5)
+ax.text(119, -1.55, "below zero: more gate_40 players got this far", ha="right", color=INK2, fontsize=9.5)
+ax.set_ylim(-1.8, 1.8)
+ax.set_xlim(0, 120)
+ax.set_ylabel("gap, pp (95% CI)")
+ax.set_xlabel("game rounds played in first 14 days (rounds are not levels)")
+ax.set_title("Gap in the share of players reaching each round (gate_30 minus gate_40)")
+for ax in axes:
+    for g in (30, 40):
+        ax.axvline(g, color=MUTED, lw=1, zorder=1)
+top = axes[0].get_ylim()[1]
+for g, ha, dx in ((30, "right", -1), (40, "left", 1)):
+    axes[0].text(g + dx, top * 0.06, f"{g} rounds", color=INK2, fontsize=9, ha=ha)
+fig.tight_layout()
+plt.show()
+'''),
     ("md", "s8_save"),
     ("code", '''\
 import os
@@ -314,10 +377,18 @@ facts = clean({
     "per_100k_installs_d7": {
         "players_lost": 100_000 * r7["diff"],
         "players_lost_ci_low": 100_000 * r7["ci_low"],
-        "players_lost_ci_high": 100_000 * r7["ci_high"]},
+        "players_lost_ci_high": 100_000 * r7["ci_high"],
+        "players_lost_surplus_removed": 100_000 * pre_gate["surplus_low_engagement"]["diff"],
+        "players_lost_surplus_removed_ci_low": 100_000 * pre_gate["surplus_low_engagement"]["ci_low"],
+        "players_lost_surplus_removed_ci_high": 100_000 * pre_gate["surplus_low_engagement"]["ci_high"]},
+    "before_any_gate": pre_gate,
+    "dropoff": {"bands": bands.to_dict(orient="records"),
+                "reached": reach.to_dict(orient="records"),
+                "d7_given_reached": d7_reached.to_dict(orient="records")},
     "next_experiments": {
         "baseline_d7_gate_30": r7["rate_control"],
         "n_per_arm_for_observed_gap": cc.n_per_arm(r7["rate_control"], abs(r7["diff"])),
+        "n_per_arm_for_adjusted_gap": cc.n_per_arm(r7["rate_control"], pre_gate["surplus_low_engagement"]["diff"]),
         "planning_gap_small": 0.005,
         "n_per_arm_for_small_gap": cc.n_per_arm(r7["rate_control"], 0.005)},
     "rounds": {"all": rt_all, "capped": rt_cap,
@@ -331,7 +402,8 @@ with open("out/results.json", "w") as f:
     json.dump(facts, f, indent=2, default=float)
 seg7.to_csv("out/segments_d7.csv", index=False)
 seg1.to_csv("out/segments_d1.csv", index=False)
-print("saved out/results.json, out/segments_d7.csv, out/segments_d1.csv")
+round_tbl.to_csv("out/dropoff_by_round.csv", index=False)
+print("saved out/results.json, out/segments_d7.csv, out/segments_d1.csv, out/dropoff_by_round.csv")
 '''),
     ("md", "s9_conclusion"),
 ]

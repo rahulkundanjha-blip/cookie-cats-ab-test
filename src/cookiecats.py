@@ -294,3 +294,91 @@ def mix_shift_test(df: pd.DataFrame, bins=SEGMENT_BINS, labels=SEGMENT_LABELS) -
     chi2, p, dof, _ = stats.chi2_contingency(table)
     return {"chi2": float(chi2), "dof": int(dof), "p_value": float(p),
             "table": table}
+
+
+# ----------------------------------------------------------------------------
+# Drop-off by round (descriptive, except for the pre-gate checks)
+# ----------------------------------------------------------------------------
+# There is no level column, so `sum_gamerounds` stands in for progress. Stopping
+# "at N" means a player's 14-day total was exactly N, which includes players
+# still active when the window closed.
+BANDS = [(0, 0), (1, 9), (10, 19), (20, 29), (30, 34), (35, 39), (40, 44), (45, 49),
+         (50, 59), (60, 79), (80, 99), (100, 149), (150, 199)]
+
+
+def round_table(df, max_round=200):
+    rows = []
+    for n in range(max_round + 1):
+        row = {"round": n}
+        for v, k in [(CONTROL, "control"), (TREATMENT, "treatment")]:
+            r = df.loc[df["version"] == v, "sum_gamerounds"]
+            reached, stopped = int((r >= n).sum()), int((r == n).sum())
+            row.update({f"reached_{k}": reached, f"stopped_{k}": stopped,
+                        f"survival_{k}": reached / len(r), f"dropoff_{k}": stopped / reached})
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def band_table(df):
+    rows = []
+    for lo, hi in BANDS:
+        g = {}
+        for v, k in [(CONTROL, "control"), (TREATMENT, "treatment")]:
+            r = df.loc[df["version"] == v, "sum_gamerounds"]
+            g[k] = (int(((r >= lo) & (r <= hi)).sum()), int((r >= lo).sum()))
+        t = two_proportion(g["control"][0], g["control"][1], g["treatment"][0], g["treatment"][1])
+        width = hi - lo + 1
+        rows.append({"band": f"{lo}-{hi}" if hi > lo else str(lo),
+                     "entered_control": t["n_control"], "entered_treatment": t["n_treatment"],
+                     "stopped_control": t["x_control"], "stopped_treatment": t["x_treatment"],
+                     "dropoff_control": t["rate_control"], "dropoff_treatment": t["rate_treatment"],
+                     "per_round_control": 1 - (1 - t["rate_control"]) ** (1 / width),
+                     "per_round_treatment": 1 - (1 - t["rate_treatment"]) ** (1 / width),
+                     "diff": t["diff"], "ci_low": t["ci_low"], "ci_high": t["ci_high"],
+                     "p_value": t["p_value"]})
+    out = pd.DataFrame(rows)
+    out["p_bonferroni"] = (out["p_value"] * len(out)).clip(upper=1)
+    return out
+
+
+def survival_tests(df, points=(1, 10, 20, 30, 35, 40, 45, 50, 60, 80, 100, 150, 200)):
+    rows = []
+    for n in points:
+        g = df.assign(hit=df["sum_gamerounds"] >= n).groupby("version")["hit"].agg(["sum", "count"])
+        t = two_proportion(int(g.loc[CONTROL, "sum"]), int(g.loc[CONTROL, "count"]),
+                              int(g.loc[TREATMENT, "sum"]), int(g.loc[TREATMENT, "count"]))
+        rows.append({"at_least_rounds": n, "share_control": t["rate_control"],
+                     "share_treatment": t["rate_treatment"], "diff": t["diff"],
+                     "ci_low": t["ci_low"], "ci_high": t["ci_high"], "p_value": t["p_value"]})
+    return pd.DataFrame(rows)
+
+
+def d7_given_reached(df, points=(30, 40, 50, 60, 80, 100)):
+    rows = []
+    for n in points:
+        s = df[df["sum_gamerounds"] >= n]
+        g = s.groupby("version")["retention_7"].agg(["sum", "count"])
+        t = two_proportion(int(g.loc[CONTROL, "sum"]), int(g.loc[CONTROL, "count"]),
+                              int(g.loc[TREATMENT, "sum"]), int(g.loc[TREATMENT, "count"]))
+        rows.append({"at_least_rounds": n, "d7_control": t["rate_control"], "d7_treatment": t["rate_treatment"],
+                     "diff": t["diff"], "ci_low": t["ci_low"], "ci_high": t["ci_high"], "p_value": t["p_value"]})
+    return pd.DataFrame(rows)
+
+
+def before_any_gate(df, gate=30):
+    """Fewer than `gate` rounds means no gate was reached, so the variants should not differ."""
+    below = df[df["sum_gamerounds"] < gate]
+    above = df[df["sum_gamerounds"] >= gate]
+    out = {}
+    for name, part in [("below", below), ("at_or_above", above)]:
+        g = part.groupby("version")["retention_7"].agg(["sum", "count"])
+        c, t = int(g.loc[CONTROL, "count"]), int(g.loc[TREATMENT, "count"])
+        out[name] = {"srm": srm_test(c, t),
+                     "d7": two_proportion(int(g.loc[CONTROL, "sum"]), c, int(g.loc[TREATMENT, "sum"]), t)}
+    # Remove the surplus at the retention rate of gate_40 players who reached no gate.
+    r = compare_metric(df, "retention_7")
+    excess = r["n_treatment"] - r["n_control"]
+    low_rate = out["below"]["d7"]["rate_treatment"]
+    out["surplus_low_engagement"] = two_proportion(
+        r["x_control"], r["n_control"], round(r["x_treatment"] - excess * low_rate), r["n_treatment"] - excess)
+    return out

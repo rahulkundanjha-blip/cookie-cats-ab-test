@@ -172,11 +172,464 @@
   "per_100k_installs_d7": {
     "players_lost": 820.1298315205913,
     "players_lost_ci_low": 312.10442115262805,
-    "players_lost_ci_high": 1328.1552418885544
+    "players_lost_ci_high": 1328.1552418885544,
+    "players_lost_surplus_removed": 568.2326621923917,
+    "players_lost_surplus_removed_ci_low": 56.685699198598655,
+    "players_lost_surplus_removed_ci_high": 1079.7796251861846
+  },
+  "before_any_gate": {
+    "below": {
+      "srm": {
+        "n_control": 28044,
+        "n_treatment": 28876,
+        "control_share": 0.4926914968376669,
+        "chi2": 12.161349262122277,
+        "p_value": 0.00048790069319671047
+      },
+      "d7": {
+        "n_control": 28044,
+        "n_treatment": 28876,
+        "x_control": 1194,
+        "x_treatment": 1135,
+        "rate_control": 0.042575952075310224,
+        "rate_treatment": 0.039305998060673225,
+        "diff": 0.0032699540146369985,
+        "ci_low": 1.3084681479806626e-05,
+        "ci_high": 0.00652682334779419,
+        "relative_change_treatment_vs_control": -0.07680283951966499,
+        "z": 1.9688712509667765,
+        "p_value": 0.048967877660581034
+      }
+    },
+    "at_or_above": {
+      "srm": {
+        "n_control": 16656,
+        "n_treatment": 16613,
+        "control_share": 0.5006462472572064,
+        "chi2": 0.05557726411975112,
+        "p_value": 0.8136279828139132
+      },
+      "d7": {
+        "n_control": 16656,
+        "n_treatment": 16613,
+        "x_control": 7308,
+        "x_treatment": 7144,
+        "rate_control": 0.4387608069164265,
+        "rate_treatment": 0.4300246794678866,
+        "diff": 0.00873612744853991,
+        "ci_low": -0.0019160851279366523,
+        "ci_high": 0.019388340025016472,
+        "relative_change_treatment_vs_control": -0.019910911163503114,
+        "z": 1.6073448180176597,
+        "p_value": 0.10797874787534655
+      }
+    },
+    "surplus_low_engagement": {
+      "n_control": 44700,
+      "n_treatment": 44700,
+      "x_control": 8502,
+      "x_treatment": 8248,
+      "rate_control": 0.19020134228187918,
+      "rate_treatment": 0.18451901565995527,
+      "diff": 0.005682326621923917,
+      "ci_low": 0.0005668569919859865,
+      "ci_high": 0.010797796251861846,
+      "relative_change_treatment_vs_control": -0.029875323453304996,
+      "z": 2.1770944016020612,
+      "p_value": 0.02947352468534673
+    }
+  },
+  "dropoff": {
+    "bands": [
+      {
+        "band": "0",
+        "entered_control": 44700,
+        "entered_treatment": 45489,
+        "stopped_control": 1937,
+        "stopped_treatment": 2057,
+        "dropoff_control": 0.043333333333333335,
+        "dropoff_treatment": 0.04521972344962518,
+        "per_round_control": 0.043333333333333335,
+        "per_round_treatment": 0.045219723449625215,
+        "diff": -0.0018863901162918459,
+        "ci_low": -0.004571287335712501,
+        "ci_high": 0.0007985071031288088,
+        "p_value": 0.1685747478398748,
+        "p_bonferroni": 1.0
+      },
+      {
+        "band": "1-9",
+        "entered_control": 42763,
+        "entered_treatment": 43432,
+        "stopped_control": 14898,
+        "stopped_treatment": 15345,
+        "dropoff_control": 0.3483852863456727,
+        "dropoff_treatment": 0.3533109228218825,
+        "per_round_control": 0.046474481479857,
+        "per_round_treatment": 0.04727805359758419,
+        "diff": -0.004925636476209805,
+        "ci_low": -0.011297575972007645,
+        "ci_high": 0.0014463030195880355,
+        "p_value": 0.12976399801572358,
+        "p_bonferroni": 1.0
+      },
+      {
+        "band": "10-19",
+        "entered_control": 27865,
+        "entered_treatment": 28087,
+        "stopped_control": 7129,
+        "stopped_treatment": 7403,
+        "dropoff_control": 0.25584066032657454,
+        "dropoff_treatment": 0.26357389539644677,
+        "per_round_control": 0.029117677480551496,
+        "per_round_treatment": 0.03013135883129814,
+        "diff": -0.007733235069872224,
+        "ci_low": -0.014999183025628311,
+        "ci_high": -0.00046728711411613607,
+        "p_value": 0.036992036604276614,
+        "p_bonferroni": 0.480896475855596
+      },
+      {
+        "band": "20-29",
+        "entered_control": 20736,
+        "entered_treatment": 20684,
+        "stopped_control": 4080,
+        "stopped_treatment": 4071,
+        "dropoff_control": 0.19675925925925927,
+        "dropoff_treatment": 0.19681879713788436,
+        "per_round_control": 0.021671798443646306,
+        "per_round_treatment": 0.021679050258164856,
+        "diff": -5.953787862508775e-05,
+        "ci_low": -0.007717067196504546,
+        "ci_high": 0.007597991439254371,
+        "p_value": 0.9878416093528868,
+        "p_bonferroni": 1.0
+      },
+      {
+        "band": "30-34",
+        "entered_control": 16656,
+        "entered_treatment": 16613,
+        "stopped_control": 1570,
+        "stopped_treatment": 1538,
+        "dropoff_control": 0.09426032660902978,
+        "dropoff_treatment": 0.09257810148678745,
+        "per_round_control": 0.01960592430405861,
+        "per_round_treatment": 0.019242018492350632,
+        "diff": 0.001682225122242323,
+        "ci_low": -0.004572033776517169,
+        "ci_high": 0.007936484021001815,
+        "p_value": 0.5980761166144049,
+        "p_bonferroni": 1.0
+      },
+      {
+        "band": "35-39",
+        "entered_control": 15086,
+        "entered_treatment": 15075,
+        "stopped_control": 1520,
+        "stopped_treatment": 1248,
+        "dropoff_control": 0.10075566750629723,
+        "dropoff_treatment": 0.08278606965174129,
+        "per_round_control": 0.021016117467282047,
+        "per_round_treatment": 0.017134415279073778,
+        "diff": 0.017969597854555944,
+        "ci_low": 0.011456494228767124,
+        "ci_high": 0.024482701480344763,
+        "p_value": 6.49056664269372e-08,
+        "p_bonferroni": 8.437736635501835e-07
+      },
+      {
+        "band": "40-44",
+        "entered_control": 13566,
+        "entered_treatment": 13827,
+        "stopped_control": 1239,
+        "stopped_treatment": 1032,
+        "dropoff_control": 0.0913312693498452,
+        "dropoff_treatment": 0.07463658060316772,
+        "per_round_control": 0.0189726467626804,
+        "per_round_treatment": 0.015394028285325434,
+        "diff": 0.016694688746677483,
+        "ci_low": 0.010161068057454686,
+        "ci_high": 0.02322830943590028,
+        "p_value": 5.438237229445816e-07,
+        "p_bonferroni": 7.06970839827956e-06
+      },
+      {
+        "band": "45-49",
+        "entered_control": 12327,
+        "entered_treatment": 12795,
+        "stopped_control": 998,
+        "stopped_treatment": 959,
+        "dropoff_control": 0.08096049322625132,
+        "dropoff_treatment": 0.07495115279406019,
+        "per_round_control": 0.01674347716215674,
+        "per_round_treatment": 0.015460979663809327,
+        "diff": 0.006009340432191132,
+        "ci_low": -0.0006241472818066364,
+        "ci_high": 0.0126428281461889,
+        "p_value": 0.07563304273129202,
+        "p_bonferroni": 0.9832295555067964
+      },
+      {
+        "band": "50-59",
+        "entered_control": 11329,
+        "entered_treatment": 11836,
+        "stopped_control": 1567,
+        "stopped_treatment": 1659,
+        "dropoff_control": 0.1383175920204784,
+        "dropoff_treatment": 0.14016559648529908,
+        "per_round_control": 0.014776589898855108,
+        "per_round_treatment": 0.01498808972442034,
+        "diff": -0.0018480044648206684,
+        "ci_low": -0.010765915213791223,
+        "ci_high": 0.007069906284149887,
+        "p_value": 0.6846687290893833,
+        "p_bonferroni": 1.0
+      },
+      {
+        "band": "60-79",
+        "entered_control": 9762,
+        "entered_treatment": 10177,
+        "stopped_control": 2138,
+        "stopped_treatment": 2267,
+        "dropoff_control": 0.21901249743904938,
+        "dropoff_treatment": 0.22275719760243687,
+        "per_round_control": 0.012283737867226141,
+        "per_round_treatment": 0.012521075310819585,
+        "diff": -0.0037447001633874877,
+        "ci_low": -0.015262576235631507,
+        "ci_high": 0.007773175908856532,
+        "p_value": 0.5240350438232226,
+        "p_bonferroni": 1.0
+      },
+      {
+        "band": "80-99",
+        "entered_control": 7624,
+        "entered_treatment": 7910,
+        "stopped_control": 1456,
+        "stopped_treatment": 1562,
+        "dropoff_control": 0.19097586568730326,
+        "dropoff_treatment": 0.19747155499367888,
+        "per_round_control": 0.010540383209017401,
+        "per_round_treatment": 0.010939126755478923,
+        "diff": -0.006495689306375618,
+        "ci_low": -0.018938057107660326,
+        "ci_high": 0.0059466784949090915,
+        "p_value": 0.30633173381524015,
+        "p_bonferroni": 1.0
+      },
+      {
+        "band": "100-149",
+        "entered_control": 6168,
+        "entered_treatment": 6348,
+        "stopped_control": 2244,
+        "stopped_treatment": 2388,
+        "dropoff_control": 0.3638132295719844,
+        "dropoff_treatment": 0.3761814744801512,
+        "per_round_control": 0.009004476573747255,
+        "per_round_treatment": 0.009393518205582096,
+        "diff": -0.012368244908166792,
+        "ci_low": -0.02928447355564958,
+        "ci_high": 0.004547983739315996,
+        "p_value": 0.15192599888352595,
+        "p_bonferroni": 1.0
+      },
+      {
+        "band": "150-199",
+        "entered_control": 3924,
+        "entered_treatment": 3960,
+        "stopped_control": 1295,
+        "stopped_treatment": 1317,
+        "dropoff_control": 0.3300203873598369,
+        "dropoff_treatment": 0.3325757575757576,
+        "per_round_control": 0.007978164075745586,
+        "per_round_treatment": 0.008053979298170866,
+        "diff": -0.0025553702159206715,
+        "ci_low": -0.023334699199934385,
+        "ci_high": 0.018223958768093042,
+        "p_value": 0.8095345144995094,
+        "p_bonferroni": 1.0
+      }
+    ],
+    "reached": [
+      {
+        "at_least_rounds": 1,
+        "share_control": 0.9566666666666667,
+        "share_treatment": 0.9547802765503748,
+        "diff": 0.0018863901162918806,
+        "ci_low": -0.000798507103128775,
+        "ci_high": 0.004571287335712536,
+        "p_value": 0.1685747478398668
+      },
+      {
+        "at_least_rounds": 10,
+        "share_control": 0.6233780760626398,
+        "share_treatment": 0.6174459759502298,
+        "diff": 0.005932100112410077,
+        "ci_low": -0.0004022253270287461,
+        "ci_high": 0.0122664255518489,
+        "p_value": 0.06644279726349596
+      },
+      {
+        "at_least_rounds": 20,
+        "share_control": 0.4638926174496644,
+        "share_treatment": 0.4547033348721669,
+        "diff": 0.009189282577497515,
+        "ci_low": 0.0026845628973969186,
+        "ci_high": 0.01569400225759811,
+        "p_value": 0.005626669499348135
+      },
+      {
+        "at_least_rounds": 30,
+        "share_control": 0.37261744966442956,
+        "share_treatment": 0.3652091714480424,
+        "diff": 0.007408278216387176,
+        "ci_low": 0.001110030762886671,
+        "ci_high": 0.01370652566988768,
+        "p_value": 0.021143463316589072
+      },
+      {
+        "at_least_rounds": 35,
+        "share_control": 0.33749440715883666,
+        "share_treatment": 0.33139879970981995,
+        "diff": 0.006095607449016716,
+        "ci_low": -6.285528557347687e-05,
+        "ci_high": 0.012254070183606908,
+        "p_value": 0.052380125206471985
+      },
+      {
+        "at_least_rounds": 40,
+        "share_control": 0.30348993288590603,
+        "share_treatment": 0.30396359559453934,
+        "diff": -0.0004736627086333045,
+        "ci_low": -0.006476387189863775,
+        "ci_high": 0.005529061772597166,
+        "p_value": 0.87709241451121
+      },
+      {
+        "at_least_rounds": 45,
+        "share_control": 0.2757718120805369,
+        "share_treatment": 0.28127679219151885,
+        "diff": -0.0055049801109819385,
+        "ci_low": -0.011356121699781443,
+        "ci_high": 0.0003461614778175661,
+        "p_value": 0.06520103555531856
+      },
+      {
+        "at_least_rounds": 50,
+        "share_control": 0.25344519015659955,
+        "share_treatment": 0.2601947723625492,
+        "diff": -0.0067495822059496224,
+        "ci_low": -0.012451881938090149,
+        "ci_high": -0.0010472824738090962,
+        "p_value": 0.02035783845149186
+      },
+      {
+        "at_least_rounds": 60,
+        "share_control": 0.21838926174496645,
+        "share_treatment": 0.22372441689199588,
+        "diff": -0.0053351551470294245,
+        "ci_low": -0.010751388771247684,
+        "ci_high": 8.107847718883537e-05,
+        "p_value": 0.05355254271294077
+      },
+      {
+        "at_least_rounds": 80,
+        "share_control": 0.1705592841163311,
+        "share_treatment": 0.1738881927498956,
+        "diff": -0.003328908633564498,
+        "ci_low": -0.008257265526052604,
+        "ci_high": 0.0015994482589236072,
+        "p_value": 0.1855774346046687
+      },
+      {
+        "at_least_rounds": 100,
+        "share_control": 0.13798657718120805,
+        "share_treatment": 0.13955022093253314,
+        "diff": -0.001563643751325089,
+        "ci_low": -0.006076100982843413,
+        "ci_high": 0.0029488134801932348,
+        "p_value": 0.49705467970074246
+      },
+      {
+        "at_least_rounds": 150,
+        "share_control": 0.08778523489932887,
+        "share_treatment": 0.08705401305810195,
+        "diff": 0.0007312218412269117,
+        "ci_low": -0.002955707122319899,
+        "ci_high": 0.0044181508047737225,
+        "p_value": 0.6974769328800913
+      },
+      {
+        "at_least_rounds": 200,
+        "share_control": 0.05881431767337807,
+        "share_treatment": 0.058101958715293806,
+        "diff": 0.0007123589580842679,
+        "ci_low": -0.002350102151349201,
+        "ci_high": 0.003774820067517737,
+        "p_value": 0.6484407381619479
+      }
+    ],
+    "d7_given_reached": [
+      {
+        "at_least_rounds": 30,
+        "d7_control": 0.4387608069164265,
+        "d7_treatment": 0.4300246794678866,
+        "diff": 0.00873612744853991,
+        "ci_low": -0.0019160851279366523,
+        "ci_high": 0.019388340025016472,
+        "p_value": 0.10797874787534655
+      },
+      {
+        "at_least_rounds": 40,
+        "d7_control": 0.502874834144184,
+        "d7_treatment": 0.4850654516525638,
+        "diff": 0.017809382491620174,
+        "ci_low": 0.005969472044292778,
+        "ci_high": 0.02964929293894757,
+        "p_value": 0.0032016063639353845
+      },
+      {
+        "at_least_rounds": 50,
+        "d7_control": 0.55830170359255,
+        "d7_treatment": 0.533457249070632,
+        "diff": 0.02484445452191808,
+        "ci_low": 0.012022836231622133,
+        "ci_high": 0.03766607281221403,
+        "p_value": 0.0001468959749377545
+      },
+      {
+        "at_least_rounds": 60,
+        "d7_control": 0.6005941405449703,
+        "d7_treatment": 0.5786577576889064,
+        "diff": 0.02193638285606392,
+        "ci_low": 0.008282568431200456,
+        "ci_high": 0.03559019728092738,
+        "p_value": 0.0016462425798317848
+      },
+      {
+        "at_least_rounds": 80,
+        "d7_control": 0.6635624344176285,
+        "d7_treatment": 0.6487989886219975,
+        "diff": 0.014763445795631047,
+        "ci_low": -0.00017459282854626924,
+        "ci_high": 0.029701484419808362,
+        "p_value": 0.05281163178779922
+      },
+      {
+        "at_least_rounds": 100,
+        "d7_control": 0.711413748378729,
+        "d7_treatment": 0.7103024574669187,
+        "diff": 0.001111290911810281,
+        "ci_low": -0.014775395108480232,
+        "ci_high": 0.016997976932100794,
+        "p_value": 0.890952341379925
+      }
+    ]
   },
   "next_experiments": {
     "baseline_d7_gate_30": 0.19020134228187918,
     "n_per_arm_for_observed_gap": 35948,
+    "n_per_arm_for_adjusted_gap": 74882,
     "planning_gap_small": 0.005,
     "n_per_arm_for_small_gap": 96714
   },
