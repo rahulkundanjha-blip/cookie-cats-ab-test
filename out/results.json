@@ -1,0 +1,389 @@
+{
+  "checks": {
+    "rows": 90189,
+    "columns": [
+      "userid",
+      "version",
+      "sum_gamerounds",
+      "retention_1",
+      "retention_7"
+    ],
+    "duplicate_userids": 0,
+    "null_cells": 0,
+    "versions": {
+      "gate_40": 45489,
+      "gate_30": 44700
+    },
+    "unexpected_versions": [],
+    "rounds_min": 0,
+    "rounds_max": 49854,
+    "zero_round_players": 3994,
+    "zero_round_retained_d1": 87,
+    "zero_round_retained_d7": 29,
+    "d7_without_d1": 3599
+  },
+  "srm": {
+    "n_control": 44700,
+    "n_treatment": 45489,
+    "control_share": 0.49562585237667567,
+    "chi2": 6.9024049496058275,
+    "p_value": 0.008607987810836243
+  },
+  "results": {
+    "retention_1": {
+      "n_control": 44700,
+      "n_treatment": 45489,
+      "x_control": 20034,
+      "x_treatment": 20119,
+      "rate_control": 0.4481879194630872,
+      "rate_treatment": 0.44228274967574577,
+      "diff": 0.005905169787341458,
+      "ci_low": -0.0005820998747623016,
+      "ci_high": 0.012392439449445217,
+      "relative_change_treatment_vs_control": -0.01317565585974659,
+      "z": 1.7840862247974725,
+      "p_value": 0.07440965529691913
+    },
+    "retention_7": {
+      "n_control": 44700,
+      "n_treatment": 45489,
+      "x_control": 8502,
+      "x_treatment": 8279,
+      "rate_control": 0.19020134228187918,
+      "rate_treatment": 0.18200004396667327,
+      "diff": 0.008201298315205913,
+      "ci_low": 0.0031210442115262808,
+      "ci_high": 0.013281552418885545,
+      "relative_change_treatment_vs_control": -0.043119034896460164,
+      "z": 3.164358912748191,
+      "p_value": 0.0015542499756143289
+    }
+  },
+  "bootstrap": {
+    "D1 retention": {
+      "mean": 0.005927852830561146,
+      "ci_low": -0.0006061694094936245,
+      "ci_high": 0.012522074958456631,
+      "prob_control_better": 0.9653
+    },
+    "D7 retention": {
+      "mean": 0.008212888693497846,
+      "ci_low": 0.003111327305177836,
+      "ci_high": 0.013356254060093579,
+      "prob_control_better": 0.9992
+    }
+  },
+  "power": {
+    "D1 retention": {
+      "mde": 0.009266819543305781,
+      "power_observed": 0.4307527636981807,
+      "n_per_arm_for_observed": 111042
+    },
+    "D7 retention": {
+      "mde": 0.007199230078192967,
+      "power_observed": 0.8909465160140019,
+      "n_per_arm_for_observed": 34746
+    }
+  },
+  "srm_sensitivity_d7": {
+    "excess_players": 789,
+    "worst_extras_dropped": {
+      "n_control": 44700,
+      "n_treatment": 44700,
+      "x_control": 8502,
+      "x_treatment": 8279,
+      "rate_control": 0.19020134228187918,
+      "rate_treatment": 0.18521252796420581,
+      "diff": 0.004988814317673368,
+      "ci_low": -0.00013032557474330648,
+      "ci_high": 0.010107954210090041,
+      "relative_change_treatment_vs_control": -0.026229122559397737,
+      "z": 1.9100272868381478,
+      "p_value": 0.056129700085283535
+    },
+    "worst_missing_added": {
+      "n_control": 45489,
+      "n_treatment": 45489,
+      "x_control": 8502,
+      "x_treatment": 8279,
+      "rate_control": 0.1869023280353492,
+      "rate_treatment": 0.18200004396667327,
+      "diff": 0.004902284068675933,
+      "ci_low": -0.00013813826577555293,
+      "ci_high": 0.00994270640312742,
+      "relative_change_treatment_vs_control": -0.02622912255939773,
+      "z": 1.9062109681481678,
+      "p_value": 0.05662283978026087
+    },
+    "typical_extras_dropped": {
+      "n_control": 44700,
+      "n_treatment": 44700,
+      "x_control": 8502,
+      "x_treatment": 8135,
+      "rate_control": 0.19020134228187918,
+      "rate_treatment": 0.1819910514541387,
+      "diff": 0.008210290827740468,
+      "ci_low": 0.0031082908363513967,
+      "ci_high": 0.01331229081912954,
+      "relative_change_treatment_vs_control": -0.04316631380851552,
+      "z": 3.1538571385498657,
+      "p_value": 0.001611279416810658
+    },
+    "breakeven_non_retained": 784,
+    "breakeven_share": 0.9936628643852978,
+    "typical_non_retained_share": 0.8179999560333268
+  },
+  "results_without_outlier": {
+    "retention_1": {
+      "n_control": 44699,
+      "n_treatment": 45489,
+      "x_control": 20034,
+      "x_treatment": 20119,
+      "rate_control": 0.4481979462627799,
+      "rate_treatment": 0.44228274967574577,
+      "diff": 0.005915196587034155,
+      "ci_low": -0.0005721166044953541,
+      "ci_high": 0.012402509778563664,
+      "relative_change_treatment_vs_control": -0.013197732466998088,
+      "z": 1.787103509763628,
+      "p_value": 0.0739207603418346
+    },
+    "retention_7": {
+      "n_control": 44699,
+      "n_treatment": 45489,
+      "x_control": 8501,
+      "x_treatment": 8279,
+      "rate_control": 0.19018322557551623,
+      "rate_treatment": 0.18200004396667327,
+      "diff": 0.00818318160884296,
+      "ci_low": 0.003102993308148426,
+      "ci_high": 0.013263369909537494,
+      "relative_change_treatment_vs_control": -0.04302788315888383,
+      "z": 3.1574100858819936,
+      "p_value": 0.001591773177399344
+    }
+  },
+  "under_30_rounds": {
+    "players_control": 28044,
+    "players_treatment": 28876,
+    "share_control": 0.6273825503355704,
+    "share_treatment": 0.6347908285519577
+  },
+  "per_100k_installs_d7": {
+    "players_lost": 820.1298315205913,
+    "players_lost_ci_low": 312.10442115262805,
+    "players_lost_ci_high": 1328.1552418885544
+  },
+  "next_experiments": {
+    "baseline_d7_gate_30": 0.19020134228187918,
+    "n_per_arm_for_observed_gap": 35948,
+    "planning_gap_small": 0.005,
+    "n_per_arm_for_small_gap": 96714
+  },
+  "rounds": {
+    "all": {
+      "players_dropped": 0,
+      "u": 1024331250.5,
+      "p_value": 0.05020880772044255,
+      "prob_control_plays_more": 0.5037632819065877,
+      "mean_control": 52.45626398210291,
+      "mean_treatment": 51.29877552814966
+    },
+    "capped": {
+      "players_dropped": 1,
+      "u": 1024285761.5,
+      "p_value": 0.05089155279145375,
+      "prob_control_plays_more": 0.5037521801656518,
+      "mean_control": 51.342110561757536,
+      "mean_treatment": 51.29877552814966
+    },
+    "summary": [
+      {
+        "version": "gate_30",
+        "players": 44700,
+        "mean": 52.45626398210291,
+        "median": 17.0,
+        "p75": 50.0,
+        "p90": 135.0,
+        "p99": 493.0,
+        "max": 49854
+      },
+      {
+        "version": "gate_40",
+        "players": 45489,
+        "mean": 51.29877552814966,
+        "median": 16.0,
+        "p75": 52.0,
+        "p90": 134.0,
+        "p99": 492.1200000000026,
+        "max": 2640
+      }
+    ]
+  },
+  "mix_shift": {
+    "chi2": 25.040683014421873,
+    "dof": 4,
+    "p_value": 4.9371057920949726e-05
+  },
+  "mix_table": [
+    {
+      "sum_gamerounds": "0 rounds",
+      "gate_30": 1937,
+      "gate_40": 2057
+    },
+    {
+      "sum_gamerounds": "1\u201329",
+      "gate_30": 26107,
+      "gate_40": 26819
+    },
+    {
+      "sum_gamerounds": "30\u201339",
+      "gate_30": 3090,
+      "gate_40": 2786
+    },
+    {
+      "sum_gamerounds": "40\u201399",
+      "gate_30": 7398,
+      "gate_40": 7479
+    },
+    {
+      "sum_gamerounds": "100+",
+      "gate_30": 6168,
+      "gate_40": 6348
+    }
+  ],
+  "segments_d7": [
+    {
+      "segment": "0 rounds",
+      "players_control": 1937,
+      "players_treatment": 2057,
+      "share_control": 0.043333333333333335,
+      "share_treatment": 0.04521972344962518,
+      "rate_control": 0.008260196179659268,
+      "rate_treatment": 0.006319883325230919,
+      "diff": 0.0019403128544283488,
+      "ci_low": -0.003348745136612849,
+      "ci_high": 0.0072293708454695465,
+      "p_value": 0.4703967288770825
+    },
+    {
+      "segment": "1\u201329",
+      "players_control": 26107,
+      "players_treatment": 26819,
+      "share_control": 0.5840492170022371,
+      "share_treatment": 0.5895711051023325,
+      "rate_control": 0.045121997931589226,
+      "rate_treatment": 0.041836011782691376,
+      "diff": 0.00328598614889785,
+      "ci_low": -0.00018986492294072914,
+      "ci_high": 0.006761837220736429,
+      "p_value": 0.06377606505384432
+    },
+    {
+      "segment": "30\u201339",
+      "players_control": 3090,
+      "players_treatment": 2786,
+      "share_control": 0.0691275167785235,
+      "share_treatment": 0.06124557585350304,
+      "rate_control": 0.15728155339805824,
+      "rate_treatment": 0.1568557071069634,
+      "diff": 0.00042584629109485017,
+      "ci_low": -0.018205642476341176,
+      "ci_high": 0.019057335058530876,
+      "p_value": 0.9642707924842816
+    },
+    {
+      "segment": "40\u201399",
+      "players_control": 7398,
+      "players_treatment": 7479,
+      "share_control": 0.16550335570469799,
+      "share_treatment": 0.1644133746620062,
+      "rate_control": 0.32900783995674504,
+      "rate_treatment": 0.2938895574274636,
+      "diff": 0.03511828252928145,
+      "ci_low": 0.020244809798273734,
+      "ci_high": 0.04999175526028917,
+      "p_value": 3.742542975390997e-06
+    },
+    {
+      "segment": "100+",
+      "players_control": 6168,
+      "players_treatment": 6348,
+      "share_control": 0.13798657718120805,
+      "share_treatment": 0.13955022093253314,
+      "rate_control": 0.711413748378729,
+      "rate_treatment": 0.7103024574669187,
+      "diff": 0.001111290911810281,
+      "ci_low": -0.014775395108480232,
+      "ci_high": 0.016997976932100794,
+      "p_value": 0.890952341379925
+    }
+  ],
+  "segments_d1": [
+    {
+      "segment": "0 rounds",
+      "players_control": 1937,
+      "players_treatment": 2057,
+      "share_control": 0.043333333333333335,
+      "share_treatment": 0.04521972344962518,
+      "rate_control": 0.021166752710376872,
+      "rate_treatment": 0.02236266407389402,
+      "diff": -0.0011959113635171478,
+      "ci_low": -0.010246759517731619,
+      "ci_high": 0.007854936790697323,
+      "p_value": 0.7958174318364288
+    },
+    {
+      "segment": "1\u201329",
+      "players_control": 26107,
+      "players_treatment": 26819,
+      "share_control": 0.5840492170022371,
+      "share_treatment": 0.5895711051023325,
+      "rate_control": 0.25479756387175856,
+      "rate_treatment": 0.251761810656624,
+      "diff": 0.003035753215134551,
+      "ci_low": -0.004375146543765355,
+      "ci_high": 0.010446652974034458,
+      "p_value": 0.4220297039326312
+    },
+    {
+      "segment": "30\u201339",
+      "players_control": 3090,
+      "players_treatment": 2786,
+      "share_control": 0.0691275167785235,
+      "share_treatment": 0.06124557585350304,
+      "rate_control": 0.6401294498381876,
+      "rate_treatment": 0.6611629576453697,
+      "diff": -0.02103350780718205,
+      "ci_low": -0.045431941658604445,
+      "ci_high": 0.0033649260442403447,
+      "p_value": 0.09140621708571522
+    },
+    {
+      "segment": "40\u201399",
+      "players_control": 7398,
+      "players_treatment": 7479,
+      "share_control": 0.16550335570469799,
+      "share_treatment": 0.1644133746620062,
+      "rate_control": 0.783860502838605,
+      "rate_treatment": 0.7724294691803717,
+      "diff": 0.01143103365823328,
+      "ci_low": -0.0019204292820802094,
+      "ci_high": 0.02478249659854677,
+      "p_value": 0.09340131130946604
+    },
+    {
+      "segment": "100+",
+      "players_control": 6168,
+      "players_treatment": 6348,
+      "share_control": 0.13798657718120805,
+      "share_treatment": 0.13955022093253314,
+      "rate_control": 0.9020752269779507,
+      "rate_treatment": 0.8982356647763075,
+      "diff": 0.0038395622016432762,
+      "ci_low": -0.006664296583236641,
+      "ci_high": 0.014343420986523194,
+      "p_value": 0.47383637177223403
+    }
+  ]
+}

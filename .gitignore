@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+# Data is downloaded, not redistributed (see data/README.md)
+data/*.csv
+# Private working brief, not part of the public repo
+CLAUDE.md
